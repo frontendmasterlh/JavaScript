@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #div1 {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        background: rgb(202, 170, 235);
+        left: 0px;
+        top: 50px;
+      }
+      #show {
+        position: absolute;
+        top: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="button" value="开始运动" onclick="startMove(300)" />
+    <div id="div1"></div>
+    <div id="show">
+      <textarea name="" id="txt1" cols="40" rows="10"></textarea>
+    </div>
+    <span
+      style="
+        width: 1px;
+        height: 300px;
+        background: #000;
+        position: absolute;
+        left: 300px;
+      "
+    ></span>
+    <script>
+      var timerId = null;
+      var txt1 = document.querySelector("#txt1");
+      function startMove(target) {
+        var oDiv = document.getElementById("div1");
+        clearInterval(timerId);
+        timerId = setInterval(() => {
+          var speed = (target - oDiv.offsetLeft) / 8;
+          speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed)
+          if (oDiv.offsetLeft === target) {
+            // 是否到达终点
+            clearInterval(timerId); // 到达终点
+          } else {
+            oDiv.style.left = oDiv.offsetLeft + speed + "px"; // 到达终点之前
+          }
+          txt1.value += `speed=${speed}, offsetLeft=${oDiv.offsetLeft}\n`
+          // txt1.value += speed + "\n";
+          document.title = oDiv.offsetLeft + ',speed=' + speed
+        }, 30);
+      }
+    </script>
+  </body>
+</html>

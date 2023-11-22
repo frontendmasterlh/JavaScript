@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #div1 {
+        width: 100px;
+        height: 200px;
+        background: #ddd;
+        position: absolute;
+        left: -100px;
+      }
+      #div1 > span {
+        position: absolute;
+        width: 20px;
+        height: 60px;
+        line-height: 20px;
+        text-align: center;
+        left: 100px;
+        top: 70px;
+        background: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="div1"><span>分享到</span></div>
+
+    <script>
+      const oDiv = document.getElementById("div1");
+      let timer = null;
+      function startMove(target) {
+        const oDiv = document.getElementById("div1");
+        clearInterval(timer);
+
+        let speed;
+        if (oDiv.offsetLeft < target) {
+          speed = 10;
+        } else {
+          speed = -10;
+        }
+
+        timer = setInterval(() => {
+          // target 0
+          // offsetLeft -100
+
+          // target -100
+          // offsetTop 0
+          if (Math.abs(oDiv.offsetLeft - target) <= Math.abs(speed)) {
+            // console.log("🚀 ~ file: 分享到.html:51 ~ timer=setInterval ~ oDiv.offsetLeft:", oDiv.offsetLeft)
+            oDiv.style.left = target + "px";
+            // console.log("🚀 ~ file: 分享到.html:53 ~ timer=setInterval ~ oDiv.offsetLeft:", oDiv.offsetLeft)
+            clearInterval(timer);
+          } else {
+            oDiv.style.left = oDiv.offsetLeft + speed + "px";
+            // console.log("🚀 ~ file: 分享到.html:54 ~ timer=setInterval ~ oDiv.style.left:", oDiv.style.left)
+          }
+        }, 30);
+      }
+
+      oDiv.onmouseenter = () => {
+        startMove(0);
+      };
+
+      oDiv.onmouseleave = () => {
+        startMove(-100);
+      };
+    </script>
+  </body>
+</html>

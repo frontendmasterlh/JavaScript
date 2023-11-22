@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #img1 {
+        opacity: 0.3;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="Desert.jpg" alt="" id="img1" />
+
+    <script>
+      // opacity: 30 -> 100  100 -> 30
+
+      var timer = null;
+      var opacity = 30;
+
+      function startMove(target) {
+        let oImg = document.querySelector("#img1");
+        // console.log('oImg:', oImg)
+
+        clearInterval(timer);
+
+        let speed;
+        if (opacity < target) {
+          speed = 3;
+        } else {
+          speed = -3;
+        }
+
+        timer = setInterval(() => {
+          // Math.abs(opacity - target) <= Math.abs(speed)
+          // opacity 80 83 86 89 92 95 98 101
+          // target 100
+
+          // opacity 100 97 94 91
+          // target 90
+          if (Math.abs(opacity - target) <= Math.abs(speed)) {
+            // 11 ... 88 99
+            clearInterval(timer);
+            oImg.style.opacity = target / 100;
+          } else {
+            opacity += speed;
+            oImg.style.opacity = opacity / 100;
+
+            document.title = opacity;
+          }
+        }, 30);
+      }
+
+      let oImg = document.querySelector("#img1");
+
+      // oImg.onmouseenter = () => {
+      //   startMove(100)
+      // }
+      // oImg.onmouseleave = () => {
+      //   startMove(30)
+      // }
+
+      oImg.onmouseover = function () {
+        startMove(100);
+      };
+
+      oImg.onmouseout = function () {
+        startMove(30);
+      };
+    </script>
+  </body>
+</html>
